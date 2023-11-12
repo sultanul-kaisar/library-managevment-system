@@ -1,0 +1,100 @@
+@host = http://127.0.0.1:8000/api
+
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYTkyY2FiMjgwNGM5MDIxMjgxMTlkODJiM2ZmMTA3MDc1MzUyOWQxNzFlMmVkMmQ3ZmM4NTBiYWU4N2NhNTYwZjdmNTcyMjZmZDNiM2EyMzUiLCJpYXQiOjE2OTk2Mjk1OTcuMzQzMjM0LCJuYmYiOjE2OTk2Mjk1OTcuMzQzMjM1LCJleHAiOjE3MzEyNTE5OTcuMzM1OTkyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.UKOShbuWuPJrxm5_HiKpQEwUrj8ndgKnqNcO8Q5K0vKs8mCMMWGf9lAMYBCIDCCXPc2U5HKblA-udglqDWstx_xKBxw1sewX_6Nw6HUkoox3fMcUkduGtB9ItO7iepc-PeJpMohsOW1PSPYbb3oioCqfDwXvk4ESPbU3-SzO2Wet59kxtHFIlw4HCxCW__upFrKZVRdFmHRonIuuouwfIipCI0ydDBsO-9crQVjebfiwcAYIuXeByCSy9pnEA0OM2jOcfrvkkENvYabNuwXomMVBFKMjOxpj-7XGFLU8Wwl4hGFX7baItk4vVbHQAcdgh0mFcQXYFJQKo9e_XYtlhFIG0lU81tWEFyaBDpJLmzusM22KRKI1s2BpsSERgnGbPjZB1urVBJW9_W3tMAFqp-ETUWTuD_mTfxarGURQv0QLpTAfPGkGFw5AK_YTPW370jdAW89cDOy3fjUdwjkD4clUVI6CixDR_fPZIqQFCOZ3qsOVmFp_VOlqJYoPb7cBLYyDUa_eD4jyeKbnwz7TPHms8Y7TmGSwAWSOj05BocAT1BY_a4aoAZ5fwsf_7lq6XMeVp902eQ80ibAwTyhQypa96oXsb-08u4FT1rjyEtrkaNFuBsduKdx__YfMW56Tp2QTXdDIYTWaGvr7qAAbRRgKekIcqo0NB70Rk3K4H1c
+
+### Login
+POST {{host}}/auth/login HTTP/1.1
+content-type: application/json
+app-role: admin
+
+{
+   "email": "admin@email.com",
+   "password": "password"
+}
+
+### Get Auth User
+GET {{host}}/auth/user-info
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Get All Book List
+GET {{host}}/admin/all-books
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   # "search": "ABS"
+}
+
+### Add New Book
+POST {{host}}/admin/book-add
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "title": "ABS2",
+   "author": "abc2",
+   "description": "This is book 2",
+   "qty": 10,
+   "image": ""
+}
+
+### Update Book
+POST {{host}}/admin/book-update
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 2,
+   "title": "ABS2",
+   "author": "abc2",
+   "description": "This is book 2",
+   "qty": 10,
+   "image": ""
+}
+
+### Delete Book
+POST {{host}}/admin/book-delete
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 2
+}
+
+### Change Book Active Status
+POST {{host}}/admin/book-status
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 1
+}
+
+### Book Restore
+POST {{host}}/admin/book-restore
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 2
+}
+
+### Book Borrow Request List
+GET {{host}}/admin/request-list
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Book Borrow Request Status
+POST {{host}}/admin/request-status
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 1,
+   "status": "rejected"
+}
+
+
+
+

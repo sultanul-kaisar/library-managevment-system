@@ -1,0 +1,87 @@
+@host = http://127.0.0.1:8000/api
+
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNjVlOTU1NTE4OWY5MjVjMzc4MzRlNzU1MDc4N2JkZDdlNDc2ZjFhNTVmYjU2ZmNkY2YwNGE0NzQ2ZDM5ZDg1MzJkMzk1MzdlODZiZWNlOTUiLCJpYXQiOjE2OTk3NjE2MjkuMDk1Njg0LCJuYmYiOjE2OTk3NjE2MjkuMDk1Njg2LCJleHAiOjE3MzEzODQwMjkuMDkyMTU5LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.N0a2K8-ESj89WKsgUkigIq2bQy4K8xuSrD46sObei8KYCOrU2Y5Hx-Yv5vDDJuunH3LI0geSRG4S-dohpRZb3rR5nSNdGXlR4uW8AXZaaRrxv8El1zlHOo8Fasp8ILNr43c_xpRkCHby2OZfc9HGX7DKva-xDvRGB8uEGc9WZJ8khHy5Cf14mfUKMVO2Uj6j-DrKE6nLBugH9CcKbGGuW2pgwIwQ6QUIkgRPvAHbadnHbe3NYKbMKktGpj0fAGJDaym6vOQQgSA4Nqda7njMfBUQNRCvvCTrMUOMa-ZLwrY-bLgAawzNssnlLCqC91JKxUvb65yaltKysFF_NiYVabrVNBK46Tjk2-uqEDpDzFgnn90FGLYzfbPok8O0qepbYQZo59Hp9zSLJk_uxP8nMx_FeeOw1_YV9sytoab5qEO48bnUlvgvL--WuXmJkQxD4oRoJbdCiKGeTfj31PaCg9L2HS11ABJUW5j-13XDQPjTrfHJgn-Ve3TDqA0OYFzh56IwClGqFimQ8HYi1_ZrRqGp4xNzCoSMw5z5m1S3AA2M8KFWMSvxQ32hynFnawuuEqhzjvFe96P34d6UetAIknHRONjubpadltttACh_hNk5t7IdrABy1mmfD4FI3oZYvk8mtaKQiszqUjKdCNKhhPmk69L4H0uOgBCZNa4OqTA
+
+### Login
+POST {{ host }}/auth/login HTTP/1.1
+content-type: application/json
+app-role: user
+
+{
+   "email": "testuser@email.com",
+   "password": "password"
+}
+
+
+### Get Auth User
+GET {{host}}/auth/user-info
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Logout
+POST {{host}}/auth/logout HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Registration
+POST {{ host }}/auth/register HTTP/1.1
+content-type: application/json
+
+{
+   "name": "Test User",
+   "email": "testuser@email.com",
+   "password": "password",
+   "password_confirmation": "password"
+}
+
+### All Books
+GET {{host}}/books
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Book View
+GET {{host}}/book-view
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 2
+}
+
+### Book Borrow Request List
+GET {{host}}/borrow-requests
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Book Borrow Add Request
+POST {{host}}/add-borrow-request
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "book_id": 10,
+   "qty": 3,
+   "message": "I need 3 copies of this book"
+}
+
+### Book Borrow Update Request
+POST {{host}}/update-borrow-request
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 1,
+   "book_id": 2,
+   "qty": 1,
+   "message": "I need 1 copies of this book"
+}
+
+### Book Borrow Delete Request
+POST {{host}}/delete-borrow-request
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 1
+}
+
