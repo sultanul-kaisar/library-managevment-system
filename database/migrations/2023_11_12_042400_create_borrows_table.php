@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('book_id');
+            $table->string('borrow_code')->nullable();
             $table->integer('qty')->nullable();
             $table->text('message')->nullable();
             $table->date('borrow_date')->nullable();

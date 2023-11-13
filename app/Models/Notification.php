@@ -9,7 +9,13 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $hidden = [
-        'updated_at',
-    ];
+    public function from_user()
+    {
+        return $this->belongsTo(User::class, 'from_id', 'id');
+    }
+
+    public function to_user()
+    {
+        return $this->belongsTo(User::class, 'to_id');
+    }
 }

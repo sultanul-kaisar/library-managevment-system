@@ -51,11 +51,26 @@ class BorrowRepository implements BorrowInterface
          $borrow = new Borrow();
          $borrow->user_id = Auth::user()->id;
          $borrow->book_id = $request->book_id;
+         $borrow->borrow_code = random_int(100000, 999999);
          $borrow->message = $request->message;
          $borrow->qty = $request->qty;
          $borrow->borrow_date = Base::now();
          $borrow->save();
          $borrow->refresh();
+
+         $admin = User::where('role', 'admin')->first();
+
+         $notifications = [
+            'title' => "Book Borrow Request",
+            'description' => "Hello, " . $admin->name . "," . $borrow->user->name . " " . $borrow->book->title . " book borrow request has been created.",
+            'to_id' => Auth::user()->id,
+            'from_id' => Auth::user()->id,
+            "type" => 'customer_admin'
+         ];
+
+         if (isset($notifications)) {
+            NotificationController::setNotification($notifications);
+         }
 
          return Base::pass('New Borrow Request Added Successfully', $borrow);
       } catch (Exception $e) {
@@ -101,10 +116,10 @@ class BorrowRepository implements BorrowInterface
 
          $notifications = [
             'title' => "Book Borrow Request Updated",
-            'description' => "Hello, " . $admin->name . "," . $borrow->user->name . " " . $borrow->book->title . " book request has been returned. Thank you!",
+            'description' => "Hello, " . $admin->name . "," . $borrow->user->name . " " . $borrow->book->title . " book borrow request has been updated.",
             'to_id' => Auth::user()->id,
             'from_id' => Auth::user()->id,
-            "type" => 'admin_customer'
+            "type" => 'customer_admin'
          ];
 
          if (isset($notifications)) {
@@ -153,6 +168,7 @@ class BorrowRepository implements BorrowInterface
             return Base::fail('Borrow Request Not Found');
          }
          $borrow->status = $request->status;
+         $borrow->return_date = Base::now()->addDays($request->return_date) ?? null;
          $borrow->save();
          $borrow->refresh();
 
@@ -168,7 +184,7 @@ class BorrowRepository implements BorrowInterface
             if ($request->status == 'accepted') {
                $notifications = [
                      'title' => "Book Borrow Request Accepted",
-                     'description' => "Hello, " . $user->name . ", Your " . $borrow->book->title . " book borrow request has been accepted. Please collect your book from library",
+                     'description' => "Hello, " . $user->name . ", Your " . $borrow->book->title . " book borrow request has been accepted. Please collect your book from library and return the book within " . $request->return_date . " days. Thank you!",
                      'to_id' => $user->id,
                      'from_id' => Auth::user()->id,
                      "type" => 'admin_customer'
@@ -197,6 +213,28 @@ class BorrowRepository implements BorrowInterface
                NotificationController::setNotification($notifications);
             }
          return Base::pass('Borrow Request Status Updated Successfully', $borrow);
+      } catch (Exception $e) {
+         return Base::exception_fail($e);
+      }
+   }
+
+   public function borrowRequestSearch($request)
+   {
+      try {
+         if ($request['search'] !== null) {
+            $search = isset($request['search']) ? $request['search'] : null;
+            $book_requests = Borrow::where('borrow_code', 'like', '%' . $search . '%')->get();
+         }
+
+        if ($request['status'] !== null) {
+         $status = isset($request['status']) ? $request['status'] : null;
+         $book_requests = Borrow::where('status', 'like', '%' . $status . '%')->get();
+         }
+
+         if (!isset($book_requests)) return Base::fail('No search result found!');
+         $data = BorrowResource::collection($book_requests)->response()->getData(true);
+
+         return Base::pass('Borrow Requests', $data);
       } catch (Exception $e) {
          return Base::exception_fail($e);
       }
