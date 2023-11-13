@@ -38,6 +38,8 @@ class RouteServiceProvider extends ServiceProvider
 
                     Route::prefix('admin')->middleware(['auth:api', 'role:admin'])
                         ->group(base_path('routes/admin.php'));
+                    Route::prefix('notification')->middleware(['auth:api'])
+                        ->group(base_path('routes/common.php'));
                 });
             });
             

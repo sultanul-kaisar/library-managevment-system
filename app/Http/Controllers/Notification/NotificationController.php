@@ -7,6 +7,7 @@ use App\Models\Notification;
 use App\Models\User;
 use App\Services\Interface\NotificationInterface;
 use App\Traits\Base;
+use Exception;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -18,6 +19,67 @@ class NotificationController extends Controller
     public function __construct(NotificationInterface $notificationInterface)
     {
         $this->notificationInterface = $notificationInterface;
+    }
+
+
+    public function getNotification(Request $request)
+    {
+        try {
+            $data = $this->notificationInterface->getNotification($request, request()->header('app_role'));
+            return $data->success ? Base::success($data->message, $data->data) : Base::error($data->message);
+        } catch (Exception $e) {
+            return Base::exception_fail($e);
+        }
+    }
+
+    public function notificationDetails(Request $request)
+    {
+        try {
+            $data = $this->notificationInterface->notificationDetails($request, request()->header('app_role'));
+            return $data->success ? Base::success($data->message, $data->data) : Base::error($data->message);
+        } catch (Exception $e) {
+            return Base::exception_fail($e);
+        }
+    }
+
+    public function notificationMarkAllRead(Request $request)
+    {
+        try {
+            $data = $this->notificationInterface->notificationMarkAllRead($request, request()->header('app_role'));
+            return $data->success ? Base::success($data->message, $data->data) : Base::error($data->message);
+        } catch (Exception $e) {
+            return Base::exception_fail($e);
+        }
+    }
+
+    public function notificationMarkAsUnRead(Request $request)
+    {
+        try {
+            $data = $this->notificationInterface->notificationMarkAsUnRead($request, request()->header('app_role'));
+            return $data->success ? Base::success($data->message, $data->data) : Base::error($data->message);
+        } catch (Exception $e) {
+            return Base::exception_fail($e);
+        }
+    }
+
+    public function deleteNotification(Request $request)
+    {
+        try {
+            $data = $this->notificationInterface->deleteNotification($request, request()->header('app_role'));
+            return $data->success ? Base::success($data->message, $data->data) : Base::error($data->message);
+        } catch (Exception $e) {
+            return Base::exception_fail($e);
+        }
+    }
+
+    public function deleteAllNotification(Request $request)
+    {
+        try {
+            $data = $this->notificationInterface->deleteAllNotification($request, request()->header('app_role'));
+            return $data->success ? Base::success($data->message, $data->data) : Base::error($data->message);
+        } catch (Exception $e) {
+            return Base::exception_fail($e);
+        }
     }
 
     public static function setNotification($data)

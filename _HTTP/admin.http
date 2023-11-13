@@ -92,7 +92,18 @@ Authorization: Bearer {{token}}
 
 {
    "id": 1,
-   "status": "rejected"
+   "status": "accepted",
+   "return_date": 15
+}
+
+### Book Borrow Request Search and Filter
+POST {{host}}/admin/borrow-request-search
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "search": 423423
+   # "status": "accepted"
 }
 
 

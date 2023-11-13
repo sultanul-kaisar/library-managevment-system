@@ -17,6 +17,7 @@ class BorrowResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
+            'borrow_code' => $this->borrow_code,
             'user_name' => $this->user->name,
             'book_title' => $this->book->title,
             'status' => $this->status,
