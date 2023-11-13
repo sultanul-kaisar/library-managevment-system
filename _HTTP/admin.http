@@ -106,6 +106,46 @@ Authorization: Bearer {{token}}
    # "status": "accepted"
 }
 
+### All Notification
+GET {{host}}/notification
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Notification view
+GET {{host}}/notification/details
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 2
+}
+
+### Notification Mark as read all
+POST {{host}}/notification/mark-all-read
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Notification Mark as unread all
+POST {{host}}/notification/mark-all-unread
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Notification Delete
+POST {{host}}/notification/delete
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 2
+}
+
+### Notification Delete All
+POST {{host}}/notification/delete-all
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
 
 
 
