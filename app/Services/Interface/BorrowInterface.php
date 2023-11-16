@@ -12,4 +12,5 @@ interface BorrowInterface
    public function requestList($request);
    public function requestStatus($request);
    public function borrowRequestSearch($request);
+   public function editHistory($request);
 }

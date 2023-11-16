@@ -63,7 +63,7 @@ class BorrowRepository implements BorrowInterface
          $notifications = [
             'title' => "Book Borrow Request",
             'description' => "Hello, " . $admin->name . "," . $borrow->user->name . " " . $borrow->book->title . " book borrow request has been created.",
-            'to_id' => Auth::user()->id,
+            'to_id' => $admin->id,
             'from_id' => Auth::user()->id,
             "type" => 'customer_admin'
          ];
@@ -117,7 +117,7 @@ class BorrowRepository implements BorrowInterface
          $notifications = [
             'title' => "Book Borrow Request Updated",
             'description' => "Hello, " . $admin->name . "," . $borrow->user->name . " " . $borrow->book->title . " book borrow request has been updated.",
-            'to_id' => Auth::user()->id,
+            'to_id' => $admin->id,
             'from_id' => Auth::user()->id,
             "type" => 'customer_admin'
          ];
@@ -235,6 +235,25 @@ class BorrowRepository implements BorrowInterface
          $data = BorrowResource::collection($book_requests)->response()->getData(true);
 
          return Base::pass('Borrow Requests', $data);
+      } catch (Exception $e) {
+         return Base::exception_fail($e);
+      }
+   }
+
+   public function editHistory($request)
+   {
+      try {
+         $borrow = Borrow::find($request->id);
+         if (!$borrow) {
+            return Base::fail('Borrow Request Not Found');
+         }
+
+         $edit_history = BorrowHistory::where('borrow_id', $request->id)
+                           ->orderBy('created_at', 'desc')
+                           ->first(); 
+         if (!isset($edit_history)) return Base::fail('No edit history found!');
+         return Base::pass('Edit History', $edit_history);
+
       } catch (Exception $e) {
          return Base::exception_fail($e);
       }

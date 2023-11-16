@@ -45,7 +45,7 @@ content-type: application/json
 Authorization: Bearer {{token}}
 
 {
-   "id": 2
+   "id": 1
 }
 
 ### Book Borrow Request List
@@ -59,9 +59,9 @@ content-type: application/json
 Authorization: Bearer {{token}}
 
 {
-   "book_id": 10,
-   "qty": 3,
-   "message": "I need 3 copies of this book"
+   "book_id": 1,
+   "qty": 15,
+   "message": "I need 15 copies of this book"
 }
 
 ### Book Borrow Update Request
@@ -122,4 +122,13 @@ Authorization: Bearer {{token}}
 POST {{host}}/notification/delete-all
 content-type: application/json
 Authorization: Bearer {{token}}
+
+### Edit History
+GET {{host}}/edit-history
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": 1
+}
 

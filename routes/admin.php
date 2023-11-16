@@ -15,3 +15,4 @@ Route::get('/request-list', [BorrowController::class, 'requestList']);
 Route::post('/request-status', [BorrowController::class, 'requestStatus']);
 
 Route::post('/borrow-request-search', [BorrowController::class, 'borrowRequestSearch']);
+Route::get('/edit-history', [BorrowController::class, 'editHistory']);

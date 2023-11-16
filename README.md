@@ -16,6 +16,8 @@
 
 8. Admin credentials -> email: admin@email.com Password: password
 
+9. php artisan serve
+
 For user panel use user.http and for admin panel use admin.http
 
 

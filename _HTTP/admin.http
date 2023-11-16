@@ -144,7 +144,14 @@ POST {{host}}/notification/delete-all
 content-type: application/json
 Authorization: Bearer {{token}}
 
+### Edit History
+GET {{host}}/admin/edit-history
+content-type: application/json
+Authorization: Bearer {{token}}
 
+{
+   "id": 2
+}
 
 
 

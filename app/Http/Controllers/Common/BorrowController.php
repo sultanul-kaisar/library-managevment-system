@@ -89,4 +89,14 @@ class BorrowController extends Controller
             return Base::exception_fail($e);
         }
     }
+
+    public function editHistory(Request $request)
+    {
+        try {
+            $data = $this->borrowInterface->editHistory($request);
+            return $data->success ? Base::success($data->message, $data->data) : Base::error($data->message);
+        } catch (Exception $e) {
+            return Base::exception_fail($e);
+        }
+    }
 }
